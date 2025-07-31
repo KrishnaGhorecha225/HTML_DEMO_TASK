@@ -150,7 +150,7 @@ h6 {
   left: 0;
   bottom: 0;
   padding: 0 15px;
-  width: 300px;
+  width: 300px; /* 300px for sidebar */
   transition: all ease-in-out 0.3s;
   overflow-y: auto;
   z-index: 997;
@@ -208,8 +208,8 @@ h6 {
 @media (min-width: 1200px) {
   .header~main,
   .header~#footer {
-    margin-left: 350px; /* 300px (sidebar) + 32px (space) */
-    margin-right: 40px;
+    margin-left: 300px; /* 300px (sidebar) + 50px (space) */
+    /* margin-right: 40px; */
   }
 }
 
@@ -500,6 +500,23 @@ h6 {
 /*--------------------------------------------------------------
 # Hero Carousel Section
 --------------------------------------------------------------*/
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.hero-carousel.section {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+[data-aos] {
+  transform: none !important;
+}
+
 .hero-carousel {
   width: 100vw;
   height: 100vh;

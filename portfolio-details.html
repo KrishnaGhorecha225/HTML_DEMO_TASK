@@ -66,24 +66,8 @@
         <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
         <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
         <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>
-        <!-- <li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-          <ul>
-            <li><a href="#">Dropdown 1</a></li>
-            <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Deep Dropdown 1</a></li>
-                <li><a href="#">Deep Dropdown 2</a></li>
-                <li><a href="#">Deep Dropdown 3</a></li>
-                <li><a href="#">Deep Dropdown 4</a></li>
-                <li><a href="#">Deep Dropdown 5</a></li>
-              </ul>
-            </li>
-            <li><a href="#">Dropdown 2</a></li>
-            <li><a href="#">Dropdown 3</a></li>
-            <li><a href="#">Dropdown 4</a></li>
-          </ul>
-        </li> -->
         <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+        <li><a href="upload_image.html" class="active"><i class="bi bi-upload navicon"></i> Upload</a></li>
       </ul>
     </nav>
 
@@ -112,62 +96,11 @@
         <div class="row gy-4">
 
           <div class="col-lg-8">
-            <div class="portfolio-details-slider swiper init-swiper">
-
-              <script type="application/json" class="swiper-config">
-                {
-                  "loop": true,
-                  "speed": 600,
-                  "autoplay": {
-                    "delay": 5000
-                  },
-                  "slidesPerView": "auto",
-                  "pagination": {
-                    "el": ".swiper-pagination",
-                    "type": "bullets",
-                    "clickable": true
-                  }
-                }
-              </script>
-
-              <div class="swiper-wrapper align-items-center">
-
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/project-1.png" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/product-1.jpg" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/branding-1.jpg" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/books-1.jpg" alt="">
-                </div>
-
-              </div>
-              <div class="swiper-pagination"></div>
-            </div>
+            <div id="portfolioDetailsSliderContainer"></div>
           </div>
-
           <div class="col-lg-4">
-            <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
-              <h3>Project information</h3>
-              <ul>
-                <li><strong>Category</strong>: Application</li>
-                <li><strong>Client</strong>: Rajkot</li>
-                <li><strong>Project date</strong>: 01 july, 2025</li>
-                <!-- <li><strong>Project URL</strong>: <a href="#">leaning.example.com</a></li> -->
-              </ul>
-            </div>
-            <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
-              <h2>E-learning platform / Study App / Online Course App)</h2>
-              <p>
-                An interactive web application designed to help users access educational content, track progress, and learn various subjects through a clean and responsive user interface. The app offers course listings, video content, quizzes, and user profiles.              </p>
-            </div>
+            <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200" id="portfolioInfo"></div>
+            <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300" id="portfolioDescription"></div>
           </div>
 
         </div>
@@ -215,6 +148,114 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    // Static projects array (for built-in projects)
+    const staticProjects = [
+      {
+        id: 0,
+        title: "E-learning platform / Study App / Online Course App",
+        category: "Application",
+        client: "Rajkot",
+        date: "2025-07-01",
+        description: "An interactive web application designed to help users access educational content, track progress, and learn various subjects through a clean and responsive user interface. The app offers course listings, video content, quizzes, and user profiles.",
+        images: [
+          "assets/img/portfolio/project-1.png",
+          "assets/img/portfolio/product-1.jpg",
+          "assets/img/portfolio/branding-1.jpg",
+          "assets/img/portfolio/books-1.jpg"
+        ]
+      }
+      // Add more static projects here if needed
+    ];
+
+    // Helper to get query param
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    // Get project data (from localStorage or static)
+    function getProjectToShow() {
+      const isStatic = getQueryParam('static');
+      let idx = getQueryParam('id');
+      if (isStatic === '1') {
+        idx = idx !== null && !isNaN(parseInt(idx, 10)) ? parseInt(idx, 10) : 0;
+        return staticProjects[idx] || staticProjects[0];
+      } else {
+        const projects = JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
+        if (!projects.length) return null;
+        idx = idx !== null && !isNaN(parseInt(idx, 10)) ? parseInt(idx, 10) : 0;
+        return projects[idx] || projects[0];
+      }
+    }
+
+    function renderPortfolioDetails() {
+      const project = getProjectToShow();
+      if (!project) {
+        document.getElementById('portfolioDetailsSliderContainer').innerHTML = '<div class="alert alert-warning">No uploaded project found. Please upload a project first.</div>';
+        document.getElementById('portfolioInfo').innerHTML = '';
+        document.getElementById('portfolioDescription').innerHTML = '';
+        return;
+      }
+
+      // Images: static projects use array, uploaded use single image
+      let images = project.images || (project.imgURL ? [project.imgURL] : []);
+      let sliderHtml = '';
+      if (images.length > 0) {
+        sliderHtml = `
+        <div class="portfolio-details-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+            ${images.map(img => `<div class=\"swiper-slide\"><img src=\"${img}\" alt=\"${project.title}\"></div>`).join('')}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        `;
+      } else {
+        sliderHtml = `<div class=\"portfolio-card\"><img src=\"assets/img/portfolio/project-1.png\" alt=\"No Image\"></div>`;
+      }
+      // Video player for uploaded projects
+      let videoHtml = '';
+      if (project.videoURL) {
+        videoHtml = `<div class=\"portfolio-video mt-4\"><video src=\"${project.videoURL}\" controls style=\"max-width:100%\"></video></div>`;
+      }
+      document.getElementById('portfolioDetailsSliderContainer').innerHTML = sliderHtml + videoHtml;
+
+      // Info
+      document.getElementById('portfolioInfo').innerHTML = `
+        <h3>Project information</h3>
+        <ul>
+          <li><strong>Category</strong>: ${project.category || ''}</li>
+          <li><strong>Client</strong>: ${project.client || ''}</li>
+          <li><strong>Project date</strong>: ${project.date || ''}</li>
+        </ul>
+      `;
+
+      // Description
+      document.getElementById('portfolioDescription').innerHTML = `
+        <h2>${project.title || ''}</h2>
+        <p>${project.description || ''}</p>
+      `;
+
+      // Init Swiper if images
+      if (images.length > 0 && window.Swiper) {
+        setTimeout(() => {
+          new Swiper('.portfolio-details-slider', {
+            loop: true,
+            speed: 600,
+            autoplay: { delay: 5000 },
+            slidesPerView: 'auto',
+            pagination: {
+              el: '.swiper-pagination',
+              type: 'bullets',
+              clickable: true
+            }
+          });
+        }, 100);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderPortfolioDetails);
+  </script>
 
 </body>
 

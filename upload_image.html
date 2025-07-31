@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Portfolio - Admin</title>
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    .portfolio-preview img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .portfolio-card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body class="portfolio-details-page">
+
+  <header id="header" class="header dark-background d-flex flex-column">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+    <div class="profile-img">
+      <img src="assets/img/profile.png" alt="" class="img-fluid rounded-circle">
+    </div>
+    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+      <h1 class="sitename">Krishna Ghorecha</h1>
+    </a>
+    <div class="social-links text-center">
+      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    </div>
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html"><i class="bi bi-house navicon"></i>Home</a></li>
+        <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
+        <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
+        <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
+        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+        <li><a href="upload_image.html" class="active"><i class="bi bi-upload navicon"></i> Upload</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div class="page-title dark-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Upload Portfolio</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Upload Portfolio</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <section class="section">
+      <div class="container">
+        <form id="uploadForm">
+          <div class="mb-3">
+            <label class="form-label">Project Title</label>
+            <input type="text" class="form-control" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select class="form-control" name="category" required>
+              <option value="app">App</option>
+              <option value="website">Website</option>
+              <option value="branding">Branding</option>
+              <option value="books">Books</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Client Name</label>
+            <input type="text" class="form-control" name="client" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Project Date</label>
+            <input type="date" class="form-control" name="date" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" name="description" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Image Upload</label>
+            <input type="file" class="form-control" name="image" accept="image/*" required>
+          </div>
+          <div class="mb-3">
+  <label class="form-label">Video Upload</label>
+  <input type="file" class="form-control" name="video" accept="video/*">
+</div>
+
+          <input type="hidden" name="editIndex" id="editIndex">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Preview Project</button>
+          <button type="button" class="btn btn-secondary d-none" id="cancelEditBtn">Cancel Edit</button>
+        </form>
+        <div id="projectPreview" class="portfolio-preview mt-5"></div>
+        <hr>
+        <h4 class="mt-4">Your Uploaded Projects</h4>
+        <div id="uploadedProjectsList"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container">
+      <div class="copyright text-center ">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">Portfolio</strong> <span>All Rights Reserved</span></p>
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a> -->
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <!-- Preloader -->
+  <div id="preloader"></div>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    const form = document.getElementById('uploadForm');
+    const preview = document.getElementById('projectPreview');
+    const uploadedProjectsList = document.getElementById('uploadedProjectsList');
+    const submitBtn = document.getElementById('submitBtn');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
+    const editIndexInput = document.getElementById('editIndex');
+
+    function getProjects() {
+      return JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
+    }
+    function setProjects(projects) {
+      localStorage.setItem('portfolioProjects', JSON.stringify(projects));
+    }
+
+    function renderProjectsList() {
+      const projects = getProjects();
+      if (projects.length === 0) {
+        uploadedProjectsList.innerHTML = '<p class="text-muted">No projects uploaded yet.</p>';
+        return;
+      }
+      uploadedProjectsList.innerHTML = projects.map((p, i) => `
+        <div class="portfolio-card mb-3" data-idx="${i}">
+          <h5>${p.title}</h5>
+          <p><strong>Category:</strong> ${p.category}</p>
+          <p><strong>Client:</strong> ${p.client || ''}</p>
+          <p><strong>Project Date:</strong> ${p.date || ''}</p>
+          <img src="${p.imgURL}" alt="${p.title}" class="img-fluid mb-2" style="max-width:120px;">
+          <p>${p.description}</p>
+          <button class="btn btn-sm btn-warning me-2" onclick="editProject(${i})">Edit</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteProject(${i})">Delete</button>
+        </div>
+      `).join('');
+    }
+
+    // Expose edit/delete for inline HTML
+    window.editProject = function(idx) {
+      const projects = getProjects();
+      const p = projects[idx];
+      form.title.value = p.title;
+      form.category.value = p.category;
+      form.client.value = p.client || '';
+      form.date.value = p.date || '';
+      form.description.value = p.description;
+      editIndexInput.value = idx;
+      submitBtn.textContent = 'Update Project';
+      cancelEditBtn.classList.remove('d-none');
+      preview.innerHTML = `<div class="portfolio-card"><h4>${p.title}</h4><p><strong>Category:</strong> ${p.category}</p><p><strong>Client:</strong> ${p.client || ''}</p><p><strong>Project Date:</strong> ${p.date || ''}</p><img src="${p.imgURL}" alt="${p.title}" class="img-fluid mb-3"><p>${p.description}</p></div>`;
+    }
+    window.deleteProject = function(idx) {
+      if (!confirm('Are you sure you want to delete this project?')) return;
+      let projects = getProjects();
+      projects.splice(idx, 1);
+      setProjects(projects);
+      renderProjectsList();
+      preview.innerHTML = '';
+      form.reset();
+      submitBtn.textContent = 'Preview Project';
+      cancelEditBtn.classList.add('d-none');
+      editIndexInput.value = '';
+    }
+
+    cancelEditBtn.addEventListener('click', function() {
+      form.reset();
+      preview.innerHTML = '';
+      submitBtn.textContent = 'Preview Project';
+      cancelEditBtn.classList.add('d-none');
+      editIndexInput.value = '';
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const title = form.title.value;
+      const category = form.category.value;
+      const client = form.client.value;
+      const date = form.date.value;
+      const description = form.description.value;
+      const imageFile = form.image.files[0];
+      const videoFile = form.video.files[0];
+      const editIdx = editIndexInput.value;
+
+      function saveProject(imgURL, videoURL) {
+        let projects = getProjects();
+        const projectObj = { title, category, client, date, description, imgURL };
+        if (videoURL) projectObj.videoURL = videoURL;
+        if (editIdx !== '') {
+          // Edit mode
+          // If old video exists and no new video, keep old video
+          if (!videoURL && projects[editIdx].videoURL) projectObj.videoURL = projects[editIdx].videoURL;
+          projects[editIdx] = projectObj;
+        } else {
+          projects.push(projectObj);
+        }
+        setProjects(projects);
+        renderProjectsList();
+        let videoHtml = projectObj.videoURL ? `<video src="${projectObj.videoURL}" controls style="max-width:100%;margin-top:10px;"></video>` : '';
+        preview.innerHTML = `<div class=\"portfolio-card\"><h4>${title}</h4><p><strong>Category:</strong> ${category}</p><p><strong>Client:</strong> ${client}</p><p><strong>Project Date:</strong> ${date}</p><img src=\"${imgURL}\" alt=\"${title}\" class=\"img-fluid mb-3\"><p>${description}</p>${videoHtml}</div>`;
+        form.reset();
+        submitBtn.textContent = 'Preview Project';
+        cancelEditBtn.classList.add('d-none');
+        editIndexInput.value = '';
+      }
+
+      if (imageFile) {
+        const imgReader = new FileReader();
+        imgReader.onload = function (e) {
+          const imgURL = e.target.result;
+          if (videoFile) {
+            const videoReader = new FileReader();
+            videoReader.onload = function (ev) {
+              const videoURL = ev.target.result;
+              saveProject(imgURL, videoURL);
+            };
+            videoReader.readAsDataURL(videoFile);
+          } else {
+            saveProject(imgURL, null);
+          }
+        };
+        imgReader.readAsDataURL(imageFile);
+      } else if (editIdx !== '') {
+        // Edit mode, no new image
+        let projects = getProjects();
+        const oldImg = projects[editIdx].imgURL;
+        if (videoFile) {
+          const videoReader = new FileReader();
+          videoReader.onload = function (ev) {
+            const videoURL = ev.target.result;
+            saveProject(oldImg, videoURL);
+          };
+          videoReader.readAsDataURL(videoFile);
+        } else {
+          saveProject(oldImg, null);
+        }
+      }
+    });
+
+    // Initial render
+    renderProjectsList();
+  </script>
+</body>
+</html>

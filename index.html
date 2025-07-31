@@ -65,25 +65,9 @@
         <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
         <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
         <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
-        <!-- <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Services</a></li> -->
-        <!-- <li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-          <ul>
-            <li><a href="#">Dropdown 1</a></li>
-            <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Deep Dropdown 1</a></li>
-                <li><a href="#">Deep Dropdown 2</a></li>
-                <li><a href="#">Deep Dropdown 3</a></li>
-                <li><a href="#">Deep Dropdown 4</a></li>
-                <li><a href="#">Deep Dropdown 5</a></li>
-              </ul>
-            </li>
-            <li><a href="#">Dropdown 2</a></li>
-            <li><a href="#">Dropdown 3</a></li>
-            <li><a href="#">Dropdown 4</a></li>
-          </ul>
-        </li> -->
+        
         <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+        <li><a href="upload_image.html"><i class="bi bi-envelope navicon"></i> Upload</a></li>
       </ul>
     </nav>
 
@@ -91,7 +75,10 @@
 
   <main class="main">
 
-    <!-- Hero Carousel Section -->
+    <!-- /Hero Carousel Section -->
+
+    <div id="top-section">
+      <!-- Hero Carousel Section -->
     <section id="hero" class="hero-carousel section">
       
       <!-- Hero Image Slider -->
@@ -115,7 +102,7 @@
             }
           }
         </script>
-        
+          
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <img src="assets/img/bg-1.png" alt="Hero Image 1" data-aos="fade-in">
@@ -159,10 +146,7 @@
         <div class="swiper-pagination"></div>
       </div>
 
-    </section><!-- /Hero Carousel Section -->
-
-    <div id="top-section">
-      
+    </section>
     </div>
 
 
@@ -366,7 +350,7 @@
             </div><!-- Edn Resume Item -->
 
             <div class="resume-item">
-              <h4>Bachelor of Fine Arts &amp; Graphic Design</h4>
+              <h4>Bachelor of Computer Application</h4>
               <h5>2021 - 2024</h5>
               <p><em>M.J Kundaliya Arts &amp; Computer Science Mahila College</em></p>
               
@@ -626,6 +610,34 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    // Dynamically add uploaded projects from localStorage
+    const container = document.querySelector('.isotope-container');
+    if (container) {
+      let projects = [];
+      try {
+        projects = JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
+      } catch (e) {}
+      projects.forEach((project, idx) => {
+        // Map category to filter class
+        let filterClass = 'filter-' + (project.category || 'app');
+        const div = document.createElement('div');
+        div.className = `col-lg-4 col-md-6 portfolio-item isotope-item ${filterClass}`;
+        div.innerHTML = `
+          <div class="portfolio-content h-100">
+            <img src="${project.imgURL}" class="img-fluid" alt="${project.title}">
+            <div class="portfolio-info">
+              <h4>${project.title}</h4>
+              <p>${project.title}</p>
+              <a href="${project.imgURL}" title="${project.title}" data-gallery="portfolio-gallery-${project.category}" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+              <a href="portfolio-details.html?id=${idx}" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+            </div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+  </script>
 
 </body>
 
