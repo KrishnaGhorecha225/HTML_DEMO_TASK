@@ -54,6 +54,8 @@
         <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
         <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
         <li><a href="upload_image.html" class="active"><i class="bi bi-upload navicon"></i> Upload</a></li>
+        <li><a href="upload-slider.html"><i class="bi bi-upload navicon"></i> Upload Slider</a></li>
+
       </ul>
     </nav>
   </header>
@@ -288,6 +290,31 @@
 
     // Initial render
     renderProjectsList();
+
+
+
+    // Sidebar name dynamic update from localStorage profile
+    function updateSidebarName() {
+      var sidebarNameEl = document.querySelector('.logo .sitename');
+      if (!sidebarNameEl) return;
+      var profile = {};
+      try {
+        profile = JSON.parse(localStorage.getItem('myProfile') || '{}');
+      } catch (e) {}
+      if (profile.name && profile.name.trim()) {
+        sidebarNameEl.textContent = profile.name;
+      } else {
+        sidebarNameEl.textContent = 'Krishna Ghorecha';
+      }
+    }
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'myProfile') updateSidebarName();
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      updateSidebarName();
+    });
+  </script>
+  
   </script>
 </body>
 </html>

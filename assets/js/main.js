@@ -1,3 +1,32 @@
+// Dynamic Slider Loader from localStorage
+function loadDynamicSlider() {
+  const sliderContainer = document.querySelector('.hero-slider .swiper-wrapper');
+  if (!sliderContainer) return;
+  let sliders = [];
+  try {
+    sliders = JSON.parse(localStorage.getItem('sliders') || '[]');
+  } catch (e) {}
+  if (sliders.length === 0) return;
+  sliderContainer.innerHTML = '';
+  sliders.forEach(slide => {
+    const slideEl = document.createElement('div');
+    slideEl.className = 'swiper-slide';
+    slideEl.innerHTML = `
+      <img src="${slide.image}" alt="${slide.title}" />
+      <div class="carousel-content">
+        <h2>${slide.title}</h2>
+        <p>${slide.caption}</p>
+      </div>
+    `;
+    sliderContainer.appendChild(slideEl);
+  });
+  // If using Swiper, update it
+  if (window.swiper) {
+    window.swiper.update();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadDynamicSlider);
 /**
 * Template Name: iPortfolio
 * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/

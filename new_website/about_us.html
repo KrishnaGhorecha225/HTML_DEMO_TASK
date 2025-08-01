@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Website - Step 2</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .step {
+      text-align: center;
+      flex: 1;
+      color: #6c757d;
+    }
+
+    .step.active {
+      color: #000000;
+      font-weight: bold;
+    }
+
+    .step .circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #0d6efd;
+      color: white;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .form-section {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      max-width: 600px;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <div class="stepper">
+      <div class="step">
+        <div class="circle bg-secondary">1</div>
+        <div>Home Page</div>
+      </div>
+      <div class="step active">
+        <div class="circle">2</div>
+        <div>About Us</div>
+      </div>
+      <div class="step">
+        <div class="circle bg-secondary">3</div>
+        <div>Portfolio</div>
+      </div>
+      <div class="step">
+        <div class="circle bg-secondary">4</div>
+        <div>Contact</div>
+      </div>
+      <div class="step">
+        <div class="circle bg-secondary">5</div>
+        <div>Publish</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4 class="mb-4">Step 2: About Us</h4>
+      <form id="aboutForm">
+        <div class="mb-3">
+          <label for="aboutImage" class="form-label">Upload Image</label>
+          <input class="form-control" type="file" id="aboutImage" accept="image/*" required />
+        </div>
+        <div class="mb-3">
+          <label for="aboutText" class="form-label">About Description</label>
+          <textarea class="form-control" id="aboutText" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Next Step</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("aboutForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const aboutImage = document.getElementById("aboutImage").files[0];
+      const aboutText = document.getElementById("aboutText").value;
+
+      sessionStorage.setItem("aboutText", aboutText);
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        try {
+          sessionStorage.setItem("aboutImage", event.target.result);
+          window.location.href = "portfolio_page.html";
+        } catch (error) {
+          alert("Image too large to store. Please use a smaller image.");
+        }
+      };
+
+      if (aboutImage) {
+        reader.readAsDataURL(aboutImage);
+      }
+    });
+  </script>
+</body>
+
+</html>

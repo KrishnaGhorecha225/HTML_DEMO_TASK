@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile - Admin</title>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+  <link href="assets/css/main.css" rel="stylesheet" />
+
+  <style>
+    .profile-card {
+      background-color: #f9f9f9;
+      padding: 30px;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+    .profile-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+    .form-section {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body class="portfolio-details-page">
+
+
+  <header id="header" class="header dark-background d-flex flex-column">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+    <div class="profile-img">
+      <img src="assets/img/profile.png" alt="" class="img-fluid rounded-circle">
+    </div>
+    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+      <h1 class="sitename">Krishna Ghorecha</h1>
+    </a>
+    <div class="social-links text-center">
+      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    </div>
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html"><i class="bi bi-house navicon"></i>Home</a></li>
+        <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
+        <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
+        <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
+        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+        <li><a href="upload_image.html"><i class="bi bi-upload navicon"></i> Upload</a></li>
+        <li><a href="upload-slider.html"><i class="bi bi-upload navicon"></i> Upload Slider</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div class="page-title dark-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">My Profile</h1>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <!-- Display Section -->
+        <div class="profile-card text-center shadow-sm" id="profileDisplay">
+          <img id="displayImg" src="assets/img/profile.png" alt="Profile Picture" />
+          <h4 id="displayName">Krishna Ghorecha</h4>
+          <p class="text-muted" id="displayTitle">Full Stack Developer</p>
+          <p><strong>Email:</strong> <span id="displayEmail">krishna@example.com</span></p>
+          <p><strong>Phone:</strong> <span id="displayPhone">+91 98765 43210</span></p>
+          <p><strong>LinkedIn:</strong> <a href="#" id="displayLinkedIn">linkedin.com/in/krishna-ghorecha</a></p>
+          <p><strong>Career Objective:</strong> <span id="displayObjective">To leverage my skills and experience...</span></p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section">
+          <form id="profileForm">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label>Name</label>
+                <input type="text" class="form-control" id="name" />
+              </div>
+              <div class="col-md-6">
+                <label>Title</label>
+                <input type="text" class="form-control" id="title" />
+              </div>
+              <div class="col-md-6">
+                <label>Email</label>
+                <input type="email" class="form-control" id="email" />
+              </div>
+              <div class="col-md-6">
+                <label>Phone</label>
+                <input type="text" class="form-control" id="phone" />
+              </div>
+              <div class="col-md-12">
+                <label>LinkedIn</label>
+                <input type="text" class="form-control" id="linkedin" />
+              </div>
+              <div class="col-md-12">
+                <label>Career Objective</label>
+                <textarea class="form-control" rows="3" id="objective"></textarea>
+              </div>
+              <div class="col-md-12 text-end">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Default profile data
+    const defaultProfile = {
+      name: "Krishna Ghorecha",
+      title: "Full Stack Developer",
+      email: "krishna@example.com",
+      phone: "+91 98765 43210",
+      linkedin: "https://linkedin.com/in/krishna-ghorecha",
+      objective: "To leverage my skills and experience to build scalable and efficient solutions."
+    };
+
+    function loadProfile() {
+      const profile = JSON.parse(localStorage.getItem("myProfile")) || defaultProfile;
+
+      document.getElementById("displayName").textContent = profile.name;
+      document.getElementById("displayTitle").textContent = profile.title;
+      document.getElementById("displayEmail").textContent = profile.email;
+      document.getElementById("displayPhone").textContent = profile.phone;
+      document.getElementById("displayLinkedIn").href = profile.linkedin;
+      document.getElementById("displayLinkedIn").textContent = profile.linkedin;
+      document.getElementById("displayObjective").textContent = profile.objective;
+
+      // Pre-fill form
+      document.getElementById("name").value = profile.name;
+      document.getElementById("title").value = profile.title;
+      document.getElementById("email").value = profile.email;
+      document.getElementById("phone").value = profile.phone;
+      document.getElementById("linkedin").value = profile.linkedin;
+      document.getElementById("objective").value = profile.objective;
+    }
+
+    document.getElementById("profileForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const updatedProfile = {
+        name: document.getElementById("name").value,
+        title: document.getElementById("title").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        linkedin: document.getElementById("linkedin").value,
+        objective: document.getElementById("objective").value
+      };
+
+      localStorage.setItem("myProfile", JSON.stringify(updatedProfile));
+      loadProfile(); // Refresh display
+      alert("Profile updated successfully!");
+    });
+
+    window.onload = loadProfile;
+
+    // Sidebar name dynamic update from localStorage profile
+    function updateSidebarName() {
+      var sidebarNameEl = document.querySelector('.logo .sitename');
+      if (!sidebarNameEl) return;
+      var profile = {};
+      try {
+        profile = JSON.parse(localStorage.getItem('myProfile') || '{}');
+      } catch (e) {}
+      if (profile.name && profile.name.trim()) {
+        sidebarNameEl.textContent = profile.name;
+      } else {
+        sidebarNameEl.textContent = 'Krishna Ghorecha';
+      }
+    }
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'myProfile') updateSidebarName();
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      updateSidebarName();
+    });
+  </script>
+  
+  </script>
+
+  
+</body>
+</html>

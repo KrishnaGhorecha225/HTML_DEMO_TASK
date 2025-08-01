@@ -179,6 +179,8 @@ h6 {
   margin: 0;
   font-weight: 700;
   color: var(--heading-color);
+  /* text-decoration: dashed; */
+  
 }
 
 .header .social-links {
@@ -200,6 +202,10 @@ h6 {
   transition: 0.3s;
 }
 
+#main-contain{
+  padding-inline:60px;
+  
+}
 .header .social-links a:hover {
   color: var(--contrast-color);
   background: var(--accent-color);
@@ -208,8 +214,8 @@ h6 {
 @media (min-width: 1200px) {
   .header~main,
   .header~#footer {
-    margin-left: 300px; /* 300px (sidebar) + 50px (space) */
-    /* margin-right: 40px; */
+    margin-left: 300px; 
+
   }
 }
 
@@ -276,12 +282,17 @@ h6 {
   white-space: nowrap;
   transition: 0.3s;
   width: 100%;
+  /* background: #b3acac; */
+  border-bottom: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
 }
 
 .navmenu a .navicon,
 .navmenu a:focus .navicon {
   font-size: 20px;
   margin-right: 10px;
+  /* background-color: #df1529; */
 }
 
 .navmenu a .toggle-dropdown,
@@ -310,7 +321,9 @@ h6 {
 .navmenu .active,
 .navmenu .active:focus {
   color: var(--nav-hover-color);
+  background-color: color-mix(in srgb, var(--accent-color), transparent 90%); /* this is the background color for active and hovered links*/
 }
+
 
 .navmenu a:hover .navicon,
 .navmenu .active .navicon,
@@ -500,7 +513,7 @@ h6 {
 /*--------------------------------------------------------------
 # Hero Carousel Section
 --------------------------------------------------------------*/
-
+/* 
 html, body {
   margin: 0;
   padding: 0;
@@ -638,7 +651,7 @@ html, body {
   .carousel-content p {
     font-size: 18px;
   }
-}
+} */
 
 /*--------------------------------------------------------------
 # Global Sections
